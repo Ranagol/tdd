@@ -17,4 +17,22 @@ class UserController extends Controller
     {
         return response()->json($user);
     }
+
+    public function update(Request $request, User $user)
+    {
+        $user->update($request->all());
+        return response()->json($user);
+    }
+
+    public function store(Request $request)
+    {
+        $user = User::create($request->all());
+        return response()->json($user);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return response()->json($user);
+    }
 }

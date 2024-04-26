@@ -98,4 +98,46 @@ class UserTest extends TestCase
             'email' => $user->email,
         ]);
     }
+
+    public function testUserCreateWorks(): void
+    {
+        //Arrange
+        $userData = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'password' => $this->faker->password,
+        ];
+
+        //Act
+        $response = $this->postJson('/api/users', $userData);
+
+        //Assert
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('users', [
+            'name' => $userData['name'],
+            'email' => $userData['email'],
+        ]);
+    }
+
+    public function testUserDeleteWorks(): void
+    {
+        //Arrange
+        $user = User::factory()->create();
+        $this->assertDatabaseHas('users', [
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+
+        //Act
+        $response = $this->deleteJson('/api/users/' . $user->id);
+
+        //Assert
+        $response->assertOk();
+
+        $this->assertDatabaseMissing('users', [
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
 }
