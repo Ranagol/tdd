@@ -19,13 +19,27 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         // Act
-        $response = $this->get('/users');
+        $response = $this->getJson('/api/users');
 
         // Assert
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
         ]);
         $response->assertStatus(200);
-        $response->assertSee($user->name);
+
+        /**
+         * Assert that the response contains the given JSON data anywhere in the response:
+         * https://laravel.com/docs/10.x/http-tests#assert-json-fragment
+         *
+         * This is similar to assertJson(), which check the whole json reponse
+         * assertJsonFragment() only check one small part of the json response.
+         */
+        $response->assertJsonFragment(
+            [
+                'name' => $user->name,
+            ]
+        );
+
+
     }
 }
