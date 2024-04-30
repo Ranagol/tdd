@@ -51,7 +51,6 @@ class UserTest extends TestCase
         $response = $this->getJson('/api/users/' . $user->id);
 
         // Assert
-        $response->assertOk();
         $response->assertStatus(200);
         $response->assertJsonFragment(
             [
@@ -71,7 +70,13 @@ class UserTest extends TestCase
     public function testUserEditWorks(): void
     {
         // Arrange
-        $user = User::factory()->create();
+        $user = User::factory()->create(
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->email,
+                'password' => 'password'
+            ]
+        );
         $newName = $this->faker->name;
         $newEmail = $this->faker->email;
 
@@ -81,6 +86,7 @@ class UserTest extends TestCase
             [
                 'name' => $newName,
                 'email' => $newEmail,
+                'password' => 'password'
             ]
         );
 
@@ -99,6 +105,34 @@ class UserTest extends TestCase
         ]);
     }
 
+    public function testUserEditWithInvalidData(): void
+    {
+        // Arrange
+        $user = User::factory()->create();
+
+        $newName = null;
+        $newEmail = $this->faker->email;
+
+        // Act
+        $response = $this->putJson(
+            '/api/users/' . $user->id,
+            [
+                'name' => $newName,
+                'email' => $newEmail,
+            ]
+        );
+
+        // Assert
+        $response->assertStatus(422);
+
+        //Assert database does not the new name and email
+        $this->assertDatabaseMissing('users', [
+            'name' => $newName,
+            'email' => $newEmail,
+        ]);
+
+    }
+
     public function testUserCreateWorks(): void
     {
         //Arrange
@@ -115,6 +149,27 @@ class UserTest extends TestCase
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
+            'name' => $userData['name'],
+            'email' => $userData['email'],
+        ]);
+    }
+
+    public function testUserCreateWithInvalidData(): void
+    {
+        //Arrange
+        $userData = [
+            'name' => null,
+            'email' => null,
+            'password' => $this->faker->password,
+        ];
+
+        //Act
+        $response = $this->postJson('/api/users', $userData);
+
+        //Assert
+        $response->assertStatus(422);
+
+        $this->assertDatabaseMissing('users', [
             'name' => $userData['name'],
             'email' => $userData['email'],
         ]);

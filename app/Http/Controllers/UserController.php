@@ -20,12 +20,24 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $user->update($request->all());
         return response()->json($user);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
         $user = User::create($request->all());
         return response()->json($user);
     }
@@ -35,4 +47,5 @@ class UserController extends Controller
         $user->delete();
         return response()->json($user);
     }
+    
 }

@@ -2,12 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JokeController;
 use App\Http\Controllers\UserController;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
+use App\Http\Controllers\ChuckNorrisController;
 
 // Resource routes for User
 Route::resource('users', UserController::class);
+
+
+//Get a joke from Chuck Norris API
+Route::get('/chuck-norris', ChuckNorrisController::class);
+
+
