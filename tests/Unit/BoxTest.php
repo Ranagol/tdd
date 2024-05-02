@@ -15,6 +15,7 @@ class BoxTest extends TestCase
 
         // Act
         new Box([
+            //We deliberatly create a Box with 3 coordinates, this needs to throw an exception
             new Coordinate('a', 50, 150),
             new Coordinate('b', 150, 150),
             new Coordinate('c', 150, 50),

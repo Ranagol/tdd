@@ -7,6 +7,8 @@ use Exception;
 
 /**
  * sail artisan test tests/Unit/BoxTest.php
+ * 
+ * The Box class is being inherited by: ProductBox, TextBox, TextBoxInsid, TextBoxOutside
  */
 class Box
 {
@@ -14,7 +16,7 @@ class Box
 
     protected array $coordinates;
 
-    public function __construct($coordinates)
+    public function __construct(array $coordinates)
     {
         $this->thereMustBeFourCoordinates($coordinates);
         $this->checkInstanceOfCoordinate($coordinates);
