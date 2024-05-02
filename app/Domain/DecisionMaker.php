@@ -8,10 +8,11 @@ class DecisionMaker
     /**
      * Decides whether a given TextBox is inside a given ProductBox.
      *
-     * @param ProductBox $productBox
-     * @param TextBox $textBox
-     * @return boolean
+     * @param ProductBox    $productBox
+     * @param TextBox       $textBox
+     * @return boolean      true if the TextBox is inside the ProductBox, false otherwise
      */
+    //TODO ANDOR: I do not need to make a unit test for this? I already covered this with the feature tests
     public function isInside(ProductBox $productBox, TextBox $textBox): bool
     {
 
@@ -52,13 +53,14 @@ class DecisionMaker
      * @param TextBox $textBox
      * @return boolean
      */
+    //TODO ANDOR: I do not need to make a unit test for this, because this is a private method?
     private function compareCoordinates(
         string $coordinateName, 
         ProductBox $productBox,
         TextBox $textBox
     ): bool
     {
-        //get one coordinate (a or b or c or d) from textBox and productBox
+        //get one coordinate (a or b or c or d) from textBox AND from productBox
         $textBoxCoordinate = $textBox->getCoordinateByName($coordinateName);
         $productBoxCoordinate = $productBox->getCoordinateByName($coordinateName);
 
@@ -70,43 +72,22 @@ class DecisionMaker
 
         switch ($coordinateName) {
             case 'a':
-                if ($xTextBox > $xProductBox && $yTextBox < $yProductBox) {
-                    $t = 8;
-                    return true;
-                } 
-                $t = 8;
-                return false;
+                return ($xTextBox > $xProductBox && $yTextBox < $yProductBox) ? true : false;
                 break;
-
+        
             case 'b':
-                if ($xTextBox < $xProductBox && $yTextBox < $yProductBox) {
-                    $t = 8;
-                    return true;
-                }
-                $t = 8;
-                return false;
+                return ($xTextBox < $xProductBox && $yTextBox < $yProductBox) ? true : false;
                 break;
-
+        
             case 'c':
-                if ($xTextBox < $xProductBox && $yTextBox > $yProductBox) {
-                    $t = 8;
-                    return true;
-                }
-                $t = 8;
-                return false;
+                return ($xTextBox < $xProductBox && $yTextBox > $yProductBox) ? true : false;
                 break;
-
+        
             case 'd':
-                if ($xTextBox > $xProductBox && $yTextBox > $yProductBox) {
-                    $t = 8;
-                    return true;
-                }
-                $t = 8;
-                return false;
+                return ($xTextBox > $xProductBox && $yTextBox > $yProductBox) ? true : false;
                 break;
-
+        
             default:
-                $t = 8;
                 return false;
                 break;
         }

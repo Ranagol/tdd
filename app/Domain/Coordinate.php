@@ -20,6 +20,7 @@ class Coordinate
     /**
      * Get the value of y
      */ 
+    //TODO ANDOR do I need to write unit tests for simple getters and setters?
     public function getY()
     {
         return $this->y;
