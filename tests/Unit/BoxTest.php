@@ -22,6 +22,22 @@ class BoxTest extends TestCase
         ]);
     }
 
+    public function testCreateBoxWithFiveCoordinates(): void
+    {
+        // Arrange
+        $this->expectExceptionMessage('A Box always must have 4 coordinates!');
+
+        // Act
+        new Box([
+            //We deliberatly create a Box with 3 coordinates, this needs to throw an exception
+            new Coordinate('a', 50, 150),
+            new Coordinate('b', 150, 150),
+            new Coordinate('c', 150, 50),
+            new Coordinate('c', 150, 50),
+            new Coordinate('c', 150, 50),
+        ]);
+    }
+
     public function testCreateBoxWithoutUsingCoordinateClass(): void
     {
         // Arrange
@@ -74,5 +90,17 @@ class BoxTest extends TestCase
 
         // Act
         $coordinate = $box->getCoordinateByName('e');
+    }
+
+    public function testBoxIsJustADot(): void//same coordinates
+    {
+        // Arrange
+        
+    }
+
+    public function testIsTheBoxARectangle(): void//when the angles are not 90 degrees
+    {
+        // Arrange
+        
     }
 }
