@@ -10,7 +10,6 @@ use App\Domain\Coordinate;
  */
 class ProductBox extends Box
 {
-
     public function __construct()
     {
         $this->type = 'productBox';

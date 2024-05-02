@@ -8,6 +8,34 @@ use PHPUnit\Framework\TestCase;
 
 class BoxTest extends TestCase
 {
+    public function testCreateBoxWithThreeCoordinates(): void
+    {
+        // Arrange
+        $this->expectExceptionMessage('A Box always must have 4 coordinates!');
+
+        // Act
+        new Box([
+            new Coordinate('a', 50, 150),
+            new Coordinate('b', 150, 150),
+            new Coordinate('c', 150, 50),
+        ]);
+    }
+
+    public function testCreateBoxWithoutUsingCoordinateClass(): void
+    {
+        // Arrange
+        $this->expectExceptionMessage('All elements of $coordinates must be instances of Coordinate');
+
+        // Act
+        new Box([
+            //Notice that here we do not use the new Coordinate()
+            ['a', 50, 150],
+            ['b', 150, 150],
+            ['c', 150, 50],
+            ['d', 50, 50],
+        ]);
+    }
+
     public function testGetCoordinateByName(): void
     {
         // Arrange
@@ -24,11 +52,12 @@ class BoxTest extends TestCase
         $coordinate = $box->getCoordinateByName('a');
 
         // Assert
+        $this->assertEquals('a', $coordinate->getName());
         $this->assertEquals(50, $coordinate->getX());
         $this->assertEquals(150, $coordinate->getY());
     }
 
-    public function testWhenCoordinateIsNotFound(): void
+    public function testWhenCoordinateIsNotFoundByName(): void
     {
         // Arrange
         $coordinates = [
@@ -40,10 +69,9 @@ class BoxTest extends TestCase
 
         $box = new Box($coordinates);
 
+        $this->expectExceptionMessage('Coordinate not found');
+
         // Act
         $coordinate = $box->getCoordinateByName('e');
-
-        // Assert
-        $this->assertNull($coordinate);
     }
 }
