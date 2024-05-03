@@ -6,9 +6,7 @@ use Tests\TestCase;
 use App\Domain\TextBox;
 use App\Domain\Coordinate;
 use App\Domain\ProductBox;
-use App\Domain\DecisionMaker;
-use App\Domain\TextBoxInside;
-use App\Domain\TextBoxOutside;
+use App\Domain\BoxPositionChecker;
 
 /**
  * sail artisan test tests/Feature/CocaColaTest.php
@@ -17,24 +15,24 @@ class CocaColaTest extends TestCase
 {
 
     // public array $insideCoordinates = [
-    //     new Coordinate('a', 60, 80),
-    //     new Coordinate('b', 80, 80),
-    //     new Coordinate('c', 80, 60),
-    //     new Coordinate('d', 60, 60),
+    //     new Coordinate(60, 80),
+    //     new Coordinate(80, 80),
+    //     new Coordinate(80, 60),
+    //     new Coordinate(60, 60),
     // ];
 
     // public array $outsideCoordinates = [
-    //     new Coordinate('a', 170, 80),
-    //     new Coordinate('b', 190, 80),
-    //     new Coordinate('c', 190, 60),
-    //     new Coordinate('d', 170, 60),
+    //     new Coordinate(170, 80),
+    //     new Coordinate(190, 80),
+    //     new Coordinate(190, 60),
+    //     new Coordinate(170, 60),
     // ];
 
     // public array $productBoxCoordinates = [
-    //     new Coordinate('a', 50, 150),
-    //     new Coordinate('b', 150, 150),
-    //     new Coordinate('c', 150, 50),
-    //     new Coordinate('d', 50, 50),
+    //     new Coordinate(50, 150),
+    //     new Coordinate(150, 150),
+    //     new Coordinate(150, 50),
+    //     new Coordinate(50, 50),
     // ];
 
 
@@ -42,60 +40,52 @@ class CocaColaTest extends TestCase
     {
         // Arrange
         $textBoxInside = new TextBox(
-            [
-                new Coordinate('a', 60, 80),
-                new Coordinate('b', 80, 80),
-                new Coordinate('c', 80, 60),
-                new Coordinate('d', 60, 60),
-            ]
+            new Coordinate(60, 80),
+            new Coordinate(80, 80),
+            new Coordinate(80, 60),
+            new Coordinate(60, 60),
         );
 
         $productBox = new ProductBox(
-            [
-                new Coordinate('a', 50, 150),
-                new Coordinate('b', 150, 150),
-                new Coordinate('c', 150, 50),
-                new Coordinate('d', 50, 50),
-            ]
+            new Coordinate(50, 150),
+            new Coordinate(150, 150),
+            new Coordinate(150, 50),
+            new Coordinate(50, 50),
         );
 
-        $t = 8;
-
-        $decisionMaker = new DecisionMaker();
+        $boxPositionChecker = new BoxPositionChecker();
 
         // Act
-        $isInside = $decisionMaker->isInside($productBox, $textBoxInside);
+        $isTextBoxInsideProductBox = $boxPositionChecker->isTextBoxInsideProductBox($productBox, $textBoxInside);
 
         // Assert
-        $this->assertTrue($isInside);
+        $this->assertTrue($isTextBoxInsideProductBox);
     }
 
     public function testTextBoxIsOutsideProductBox(): void
     {
         // Arrange
         $textBoxOutside = new TextBox(
-            [
-                new Coordinate('a', 170, 80),
-                new Coordinate('b', 190, 80),
-                new Coordinate('c', 190, 60),
-                new Coordinate('d', 170, 60),
-            ]
+            new Coordinate(170, 80),
+            new Coordinate(190, 80),
+            new Coordinate(190, 60),
+            new Coordinate(170, 60),
         );
+
         $productBox = new ProductBox(
-            [
-                new Coordinate('a', 50, 150),
-                new Coordinate('b', 150, 150),
-                new Coordinate('c', 150, 50),
-                new Coordinate('d', 50, 50),
-            ]
+            new Coordinate(50, 150),
+            new Coordinate(150, 150),
+            new Coordinate(150, 50),
+            new Coordinate(50, 50),
         );
-        $decisionMaker = new DecisionMaker();
+
+        $boxPositionChecker = new BoxPositionChecker();
 
         // Act
-        $isInside = $decisionMaker->isInside($productBox, $textBoxOutside);
+        $isTextBoxInsideProductBox = $boxPositionChecker->isTextBoxInsideProductBox($productBox, $textBoxOutside);
 
         // Assert
-        $this->assertFalse($isInside);
+        $this->assertFalse($isTextBoxInsideProductBox);
     }
 
 }

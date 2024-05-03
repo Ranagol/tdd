@@ -4,15 +4,12 @@ namespace App\Domain;
 
 class Coordinate
 {
-    private string $name;
-
     private int $x;
 
     private int $y;
 
-    public function __construct(string $name, int $x, int $y)
+    public function __construct(int $x, int $y)
     {
-        $this->name = $name;
         $this->x = $x;
         $this->y = $y;
     }
@@ -35,10 +32,13 @@ class Coordinate
     }
 
     /**
-     * Get the value of name
-     */ 
-    public function getName()
+     * Returns true if the coordinate x and y values are equal to the other coordinate x and y values
+     *
+     * @param Coordinate $other
+     * @return boolean
+     */
+    public function isEqual(Coordinate $other): bool
     {
-        return $this->name;
+        return $this->getX() === $other->getX() && $this->getY() === $other->getY();
     }
 }

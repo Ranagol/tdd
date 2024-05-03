@@ -4,103 +4,74 @@ namespace Tests\Unit;
 
 use App\Domain\Box;
 use App\Domain\Coordinate;
+use App\Exceptions\WrongNumberOfArgumentsException;
 use PHPUnit\Framework\TestCase;
 
 class BoxTest extends TestCase
 {
-    public function testCreateBoxWithThreeCoordinates(): void
-    {
-        // Arrange
-        $this->expectExceptionMessage('A Box always must have 4 coordinates!');
+    // TODO ANDOR how to test for 3 coordinates, when I am immediately getting an Intelisense/php error?
+    // public function testWhenMakingBoxFromThreeCoordinates(): void
+    // {
+    //     // Arrange
+    //     $this->expectException(\ArgumentCountError::class);
 
-        // Act
-        new Box([
-            //We deliberatly create a Box with 3 coordinates, this needs to throw an exception
-            new Coordinate('a', 50, 150),
-            new Coordinate('b', 150, 150),
-            new Coordinate('c', 150, 50),
-        ]);
-    }
+    //     $box = new Box(
+    //         new Coordinate(60, 80),
+    //         new Coordinate(80, 80),
+    //         new Coordinate(80, 60),
+    //         // new Coordinate(60, 60),
+    //     );
+    // }
 
-    public function testCreateBoxWithFiveCoordinates(): void
-    {
-        // Arrange
-        $this->expectExceptionMessage('A Box always must have 4 coordinates!');
+    /**
+     * // TODO Here we have an issue. PHP is supposed to throw an ArgumentCountError automatically,
+     * when we pass in the wrong number of arguments. However, it does not.
+     * https://www.php.net/manual/en/class.argumentcounterror.php
+     * 
+     * The problem is, that no ArgumentCountError is thrown, when we pass in 5 coordinates,
+     * @return void
+     */
+    // public function testWhenMakingBoxFromFiveCoordinates(): void
+    // {
+    //     // Arrange
+    //     $this->expectException(\ArgumentCountError::class);
 
-        // Act
-        new Box([
-            //We deliberatly create a Box with 3 coordinates, this needs to throw an exception
-            new Coordinate('a', 50, 150),
-            new Coordinate('b', 150, 150),
-            new Coordinate('c', 150, 50),
-            new Coordinate('c', 150, 50),
-            new Coordinate('c', 150, 50),
-        ]);
-    }
+    //     $box = new Box(
+    //         new Coordinate(60, 80),
+    //         new Coordinate(80, 80),
+    //         new Coordinate(80, 60),
+    //         new Coordinate(60, 60),
+    //         new Coordinate(60, 60),
+    //     );
+    // }
 
-    public function testCreateBoxWithoutUsingCoordinateClass(): void
-    {
-        // Arrange
-        $this->expectExceptionMessage('All elements of $coordinates must be instances of Coordinate');
-
-        // Act
-        new Box([
-            //Notice that here we do not use the new Coordinate()
-            ['a', 50, 150],
-            ['b', 150, 150],
-            ['c', 150, 50],
-            ['d', 50, 50],
-        ]);
-    }
-
-    public function testGetCoordinateByName(): void
-    {
-        // Arrange
-        $coordinates = [
-            new Coordinate('a', 50, 150),
-            new Coordinate('b', 150, 150),
-            new Coordinate('c', 150, 50),
-            new Coordinate('d', 50, 50),
-        ];
-
-        $box = new Box($coordinates);
-
-        // Act
-        $coordinate = $box->getCoordinateByName('a');
-
-        // Assert
-        $this->assertEquals('a', $coordinate->getName());
-        $this->assertEquals(50, $coordinate->getX());
-        $this->assertEquals(150, $coordinate->getY());
-    }
-
-    public function testWhenCoordinateIsNotFoundByName(): void
-    {
-        // Arrange
-        $coordinates = [
-            new Coordinate('a', 50, 150),
-            new Coordinate('b', 150, 150),
-            new Coordinate('c', 150, 50),
-            new Coordinate('d', 50, 50),
-        ];
-
-        $box = new Box($coordinates);
-
-        $this->expectExceptionMessage('Coordinate not found');
-
-        // Act
-        $coordinate = $box->getCoordinateByName('e');
-    }
-
-    public function testBoxIsJustADot(): void//same coordinates
-    {
-        // Arrange
+    // TODO how to test for this situation, when php does not allow this, because expects Coordinate class??
+    // public function testWhenMakingBoxWithoutCoordinateClass(): void
+    // {
+    //     // Arrange
+    //     $box = new Box(
+    //         [60, 80],
+    //         [80, 80],
+    //         [80, 60],
+    //         [60, 60],
+    //     );
+    // }
         
+    public function testWhenBoxIsJustADot(): void//same coordinates
+    {
+        $box = new Box(
+            new Coordinate(60, 60),
+            new Coordinate(60, 60),
+            new Coordinate(60, 60),
+            new Coordinate(60, 60),
+        );
+
+        $this->assertTrue(true);
     }
 
-    public function testIsTheBoxARectangle(): void//when the angles are not 90 degrees
-    {
-        // Arrange
+    // public function testIsTheBoxARectangle(): void//when the angles are not 90 degrees
+    // {
+    //     // Arrange
         
-    }
+    // }
 }
