@@ -21,7 +21,6 @@ class BoxTest extends TestCase
     //         new Coordinate(60, 80),
     //         new Coordinate(80, 80),
     //         new Coordinate(80, 60),
-    //         // new Coordinate(60, 60),
     //     );
     // }
 

@@ -54,6 +54,11 @@ class Box
         $this->d = $d;
     }
 
+    /**
+     * Returns true if the coordinates of a 'would be' rectangle are identical.
+     * 
+     * @return boolean
+     */
     private function areCoordinatesIdentical(
         Coordinate $a,
         Coordinate $b,

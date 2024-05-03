@@ -8,7 +8,15 @@ class BoxPositionChecker
      * Decides whether a given TextBox is inside a given ProductBox.
      *
      * We check for every 4 coordinate (named a, b, c, d) of the text box, their position in
-     * comparison with the 4 coordinates of the product box. 
+     * comparison with the 4 coordinates of the product box. This means, that we compare the
+     * 'a' coordinate of the text box with the 'a' coordinate of the product box.
+     * Then we compare the 'b' coordinate of the text box with the 'b' coordinate of the product box.
+     * Then we compare the 'c' coordinate of the text box with the 'c' coordinate of the product box.
+     * Then we compare the 'd' coordinate of the text box with the 'd' coordinate of the product box.
+     * 
+     * If all 4 coordinates of the text box are where they are supposed to be (this is defined
+     * programatically in the compareCoordinateA, compareCoordinateB, compareCoordinateC, compareCoordinateD
+     * methods), then the text box is inside the product box.
      *
      * @param ProductBox    $productBox
      * @param TextBox       $textBox

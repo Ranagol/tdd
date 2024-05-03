@@ -8,6 +8,9 @@ class Coordinate
 
     private int $y;
 
+    //TODO ANDOR do I need to write tests for type hinting in the constructor? 
+    //For the case, when for example strings are inserted as arguments?
+
     public function __construct(int $x, int $y)
     {
         $this->x = $x;
