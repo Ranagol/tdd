@@ -4,8 +4,10 @@ namespace Tests\Unit;
 
 use App\Domain\Box;
 use App\Domain\Coordinate;
-use App\Exceptions\WrongNumberOfArgumentsException;
 use PHPUnit\Framework\TestCase;
+use App\Exceptions\NotARectangleException;
+use App\Exceptions\IdenticalCoordinatesException;
+use App\Exceptions\WrongNumberOfArgumentsException;
 
 class BoxTest extends TestCase
 {
@@ -23,28 +25,6 @@ class BoxTest extends TestCase
     //     );
     // }
 
-    /**
-     * // TODO Here we have an issue. PHP is supposed to throw an ArgumentCountError automatically,
-     * when we pass in the wrong number of arguments. However, it does not.
-     * https://www.php.net/manual/en/class.argumentcounterror.php
-     * 
-     * The problem is, that no ArgumentCountError is thrown, when we pass in 5 coordinates,
-     * @return void
-     */
-    // public function testWhenMakingBoxFromFiveCoordinates(): void
-    // {
-    //     // Arrange
-    //     $this->expectException(\ArgumentCountError::class);
-
-    //     $box = new Box(
-    //         new Coordinate(60, 80),
-    //         new Coordinate(80, 80),
-    //         new Coordinate(80, 60),
-    //         new Coordinate(60, 60),
-    //         new Coordinate(60, 60),
-    //     );
-    // }
-
     // TODO how to test for this situation, when php does not allow this, because expects Coordinate class??
     // public function testWhenMakingBoxWithoutCoordinateClass(): void
     // {
@@ -56,22 +36,43 @@ class BoxTest extends TestCase
     //         [60, 60],
     //     );
     // }
+
+    public function testWhenMakingBoxFromFiveCoordinates(): void
+    {
+        // Arrange
+        $this->expectException(WrongNumberOfArgumentsException::class);
+
+        $box = new Box(
+            new Coordinate(60, 80),
+            new Coordinate(80, 80),
+            new Coordinate(80, 60),
+            new Coordinate(60, 60),
+            new Coordinate(60, 60),
+        );
+    }
         
     public function testWhenBoxIsJustADot(): void//same coordinates
     {
+        // Arrange
+        $this->expectException(IdenticalCoordinatesException::class);
         $box = new Box(
             new Coordinate(60, 60),
             new Coordinate(60, 60),
             new Coordinate(60, 60),
             new Coordinate(60, 60),
         );
-
-        $this->assertTrue(true);
     }
 
-    // public function testIsTheBoxARectangle(): void//when the angles are not 90 degrees
-    // {
-    //     // Arrange
+    public function testWhenTheBoxIsNotARectangle(): void//when the angles are not 90 degrees
+    {
+        // Arrange
+        $this->expectException(NotARectangleException::class);
         
-    // }
+        $box = new Box(
+            new Coordinate(62, 82),
+            new Coordinate(80, 84),
+            new Coordinate(88, 63),
+            new Coordinate(64, 68),
+        );
+    }
 }

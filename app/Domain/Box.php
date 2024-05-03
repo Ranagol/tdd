@@ -3,6 +3,8 @@
 namespace App\Domain;
 
 use App\Domain\Coordinate;
+use App\Exceptions\IdenticalCoordinatesException;
+use App\Exceptions\NotARectangleException;
 use App\Exceptions\WrongNumberOfArgumentsException;
 use Exception;
 
@@ -27,16 +29,25 @@ class Box
         Coordinate $d
     )
     {
+        //Check if the number of arguments is exactly 4
+        if (func_num_args() !== 4) {
+            throw new WrongNumberOfArgumentsException('You must provide exactly 4 coordinates to create a Box!');
+            return;
+        }
+
+        //Check if the coordinates form a rectangle
         if (!$this->isRectangle($a, $b, $c, $d)) {
-            throw new Exception('The coordinates you gave do not form a convex rectangle with 90-degree angles, as they should!');
+            throw new NotARectangleException('The coordinates you gave do not form a convex rectangle with 90-degree angles, as they should!');
             return;
         }   
 
+        //Check if the coordinates are identical
         if ($this->areCoordinatesIdentical($a, $b, $c, $d)) {
-            throw new Exception('The coordinates you gave are identical, which is not allowed!');
+            throw new IdenticalCoordinatesException('The coordinates you gave are identical, which is not allowed!');
             return;
         }
         
+        //Assign the coordinates
         $this->a = $a;
         $this->b = $b;
         $this->c = $c;
