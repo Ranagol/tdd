@@ -11,31 +11,6 @@ use App\Exceptions\WrongNumberOfArgumentsException;
 
 class BoxTest extends TestCase
 {
-    // TODO ANDOR how to test for 3 coordinates, when I am immediately getting an Intelisense/php error?
-    // public function testWhenMakingBoxFromThreeCoordinates(): void
-    // {
-    //     // Arrange
-    //     $this->expectException(\ArgumentCountError::class);
-
-    //     $box = new Box(
-    //         new Coordinate(60, 80),
-    //         new Coordinate(80, 80),
-    //         new Coordinate(80, 60),
-    //     );
-    // }
-
-    // TODO how to test for this situation, when php does not allow this, because expects Coordinate class??
-    // public function testWhenMakingBoxWithoutCoordinateClass(): void
-    // {
-    //     // Arrange
-    //     $box = new Box(
-    //         [60, 80],
-    //         [80, 80],
-    //         [80, 60],
-    //         [60, 60],
-    //     );
-    // }
-
     public function testWhenMakingBoxFromFiveCoordinates(): void
     {
         // Arrange

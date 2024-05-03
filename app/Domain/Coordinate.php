@@ -2,14 +2,16 @@
 
 namespace App\Domain;
 
+/**
+ * The whole logic is based on a fact that every recangle has 4 points. The location of these
+ * points can be defined by the coordinates the point. Every coordinate as a x (longitude) and y 
+ * (latitude) values.
+ */
 class Coordinate
 {
     private int $x;
 
     private int $y;
-
-    //TODO ANDOR do I need to write tests for type hinting in the constructor? 
-    //For the case, when for example strings are inserted as arguments?
 
     public function __construct(int $x, int $y)
     {
@@ -20,7 +22,6 @@ class Coordinate
     /**
      * Get the value of y
      */ 
-    //TODO ANDOR do I need to write unit tests for simple getters and setters?
     public function getY()
     {
         return $this->y;
